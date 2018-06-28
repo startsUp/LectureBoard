@@ -1,0 +1,48 @@
+.nav{
+      display:grid;
+      width: 100%;
+      /* grid-template-columns:1fr 1fr 1fr;*/
+      grid-template-columns:repeat(3, 1fr);
+      grid-gap:1em;
+      background:#092e36;
+
+      grid-auto-rows:4em;
+
+
+}
+.hLinks{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-gap:1em;
+      background:#092e36;
+      /* grid-auto-rows:100px; */
+
+}
+.nav > div{
+      padding:1em;
+}
+
+#pic{
+    position: relative;
+
+
+}
+
+#profilePic{
+  left: 5em;
+  position: absolute;
+  top: 0.5em;
+  z-index: 10;
+  max-width: 5em;
+  max-height: 5em;
+}
+
+.inlinks:hover{
+      background:#fff;
+      padding:1em;
+}
+.nav > div:hover{
+      background:#18a7c7;
+      padding:1em;
+
+}
