@@ -10,9 +10,19 @@ function getCursorPosition(svgBoard, event) {
 
 
 
+var ws;
 class DrawBoard extends Component {
     constructor(props)
     {
+        ws = new WebSocket('ws://localhost:40510');
+        ws.onopen = function () {
+        console.log('websocket is connected ...');
+        ws.send('connected');
+        }
+
+        ws.onmessage = function (ev) {
+        console.log('message recieved');
+        }
         super(props);
         this.state = {
             strokes : [],
@@ -20,8 +30,10 @@ class DrawBoard extends Component {
             strokeWidth : 0.5,
             path : "",
             points: [],
-            lastPoint : [0, 0]
+            lastPoint : [0, 0],
+            socket: ws
         };
+
         this.finishDraw = this.finishDraw.bind(this);
         this.draw = this.draw.bind(this);
         this.startDraw = this.startDraw.bind(this);
@@ -45,7 +57,7 @@ class DrawBoard extends Component {
             path: nPath,
             lastPoint: coords
          });
-
+        ws.send(nPath);
     }
 
 

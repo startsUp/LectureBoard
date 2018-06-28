@@ -1,13 +1,19 @@
-var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510});
+var WebSocket = require('ws');
+var wss = new WebSocket.Server({port: 40510});
 
-wss.on('connection', function (ws) {
-  ws.on('message', function (message) {
-    console.log('received: %s', message)
-  })
+wss.broadcast = (data) => {
+	wss.clients.forEach((client) => {
+		if (client.readyState === WebSocket.OPEN) {
+     		client.send(data);
+    	}
+	});
+}
+wss.on('connection',  (ws) => {
+  ws.on('message', (message) => {
+    wss.clients.forEach((client) => {
+    	if(client !== ws && client.readyState === WebSocket.OPEN)
+    		client.send(message);
+    });
+  });
 
-  setInterval(
-    () => ws.send(`${new Date()}`),
-    1000
-  )
-})
+});
