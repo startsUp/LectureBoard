@@ -4,8 +4,7 @@
       /* grid-template-columns:1fr 1fr 1fr;*/
       grid-template-columns:repeat(3, 1fr);
       grid-gap:1em;
-      background:#092e36;
-
+      background-color: rgba(13, 17, 18, 0.94);
       grid-auto-rows:4em;
 
 
@@ -18,14 +17,21 @@
       /* grid-auto-rows:100px; */
 
 }
-.nav > div{
-      padding:1em;
-}
+
+
 
 #pic{
     position: relative;
 
 
+}
+
+
+
+#pIcon{
+    height: 5em;
+    width: 5em;
+    position: relative;
 }
 
 #profilePic{

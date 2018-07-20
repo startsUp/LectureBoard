@@ -3,6 +3,12 @@ import './drawBoard.css';
 
 var ws;
 
+
+//// TODO: Fitting Bezier Curve to store less info and smoothen curve
+//// Curve Equation : x(u) =  Sum (c (1-u)^3 - ux)
+/// Error = Sum(mouse points - actual curve at those points)^2
+
+
 function getCursorPosition(event) {
     var svgBoard = document.getElementById('mainBoard');
     var rectB = svgBoard.getBoundingClientRect();
@@ -16,23 +22,36 @@ function getPath(path){
         <path d={path} className='path' zoomAndPan='magnify'/>
     );
 }
+
+class Path extends Component {
+    shouldComponentUpdate(newProps){
+        console.log(this.props.count);
+        return this.props.count === 0;
+
+    }
+    render(){
+        return(
+            <path d={this.props.desc} className='path' zoomAndPan='magnify'/>
+        );
+    }
+}
 class DrawBoard extends Component {
     constructor(props)
     {
-        
+
         super(props);
         this.state = {
             strokes : [],
             strokeCount: 0,
-            drawing : false, 
+            drawing : false,
             strokeWidth : 0.5,
             path : "",
             lastPoint : [0, 0],
             socket: ws
         };
-        
-        
-        
+
+
+
 
         this.updateState = this.updateState.bind(this);
         this.finishDraw = this.finishDraw.bind(this);
@@ -50,7 +69,7 @@ class DrawBoard extends Component {
 
         ws.onmessage = (message) => {
             var flag = message.data[0];
-        
+
             if(flag==='M')
             {
                 this.setState({path:message.data});
@@ -60,7 +79,7 @@ class DrawBoard extends Component {
                 const cPath = this.state.path;
                 this.setState({path:cPath+message.data});
             }
-            console.log(flag); 
+            console.log(flag);
         }
     }
 
@@ -70,7 +89,7 @@ class DrawBoard extends Component {
     }
     addToStroke(nPath)
     {
-        
+
     }
     finishStroke(){}
 
@@ -85,14 +104,14 @@ class DrawBoard extends Component {
             nPath = "L"+ coords[0] + "," + coords[1] + " ";
         const nStrokes = this.state.strokes;
         const updatedPath = cPath + nPath;
-        
+
         if(!nStrokes)
         {
             nStrokes.push(updatedPath);
         }
         else
         {
-            nStrokes[this.state.strokeCount] = updatedPath; 
+            nStrokes[this.state.strokeCount] = updatedPath;
         }
 
         this.setState({
@@ -101,7 +120,7 @@ class DrawBoard extends Component {
             path: updatedPath,
             lastPoint: coords,
          });
-        
+
         if(ws.readyState === WebSocket.OPEN)
             ws.send(nPath);
     }
@@ -139,11 +158,12 @@ class DrawBoard extends Component {
     }
 
     render(){
+        const cStrokes = this.state.strokeCount;
+        const strokes = this.state.strokes.map((stroke, index) => {
 
-        const strokes = this.state.strokes.map((stroke) => {
-           // console.log(stroke);
+
             return(
-                <path d={stroke} className='path' zoomAndPan='magnify'/>
+                <Path key={index} desc={stroke} count={cStrokes-index}/>
             );
         });
         //console.log(strokes);
