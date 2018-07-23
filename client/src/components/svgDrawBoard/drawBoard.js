@@ -25,7 +25,6 @@ function getPath(path){
 
 class Path extends Component {
     shouldComponentUpdate(newProps){
-        console.log(this.props.count);
         return this.props.count === 0;
 
     }
@@ -160,7 +159,7 @@ class DrawBoard extends Component {
     render(){
         const cStrokes = this.state.strokeCount;
         const strokes = this.state.strokes.map((stroke, index) => {
-
+            console.log(strokes);
 
             return(
                 <Path key={index} desc={stroke} count={cStrokes-index}/>
@@ -170,7 +169,7 @@ class DrawBoard extends Component {
 
         return(
           <svg className='board' id='mainBoard' zoomAndPan='magnify' onMouseDown={this.startDraw} onMouseMove={this.draw} onMouseUp={this.finishDraw} onMouseLeave={this.finishDraw}>
-          {strokes}
+          <path d="M535,88.79999923706055 C535,88.79999923706055  512,89.7999992370605 512,89.7999992370605" class="path" zoomAndPan="magnify"></path>
           </svg>
 
         );

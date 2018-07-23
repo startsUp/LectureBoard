@@ -2,10 +2,10 @@
       display:grid;
       width: 100%;
       /* grid-template-columns:1fr 1fr 1fr;*/
-      grid-template-columns:repeat(3, 1fr);
+      grid-template-columns: 1fr 5fr 1fr;
       grid-gap:1em;
       background-color: rgba(13, 17, 18, 0.94);
-      grid-auto-rows:4em;
+      grid-auto-rows:3.2em;
 
 
 }
@@ -22,17 +22,27 @@
 
 #pic{
     position: relative;
-
-
 }
 
-
-
-#pIcon{
-    height: 5em;
-    width: 5em;
+.icons{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.icons > span{
+    padding-right: 0.5em;
+}
+.icon{
+    margin-top: 0.1em;
+    height: 3em;
+    width: 3em;
+    border-radius: 8px;
     position: relative;
+    opacity: 0.8;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
+
+
 
 #profilePic{
   left: 5em;
@@ -43,12 +53,17 @@
   max-height: 5em;
 }
 
+#selectedIcon{
+    opacity: 1;
+    background: rgb(0, 249, 190);
+}
 .inlinks:hover{
       background:#fff;
       padding:1em;
 }
-.nav > div:hover{
-      background:#18a7c7;
-      padding:1em;
+
+.icon:hover{
+    opacity: 0.8;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
 
 }
