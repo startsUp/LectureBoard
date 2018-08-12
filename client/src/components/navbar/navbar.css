@@ -2,10 +2,10 @@
       display:grid;
       width: 100%;
       /* grid-template-columns:1fr 1fr 1fr;*/
-      grid-template-columns: 1fr 5fr 1fr;
+      grid-template-columns: 1fr 6fr 2fr;
       grid-gap:1em;
       background-color: rgba(13, 17, 18, 0.94);
-      grid-auto-rows:3.2em;
+      grid-auto-rows: 3.2rem;
 
 
 }
@@ -19,22 +19,21 @@
 }
 
 
-
 #pic{
     position: relative;
 }
 
 .icons{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 .icons > span{
     padding-right: 0.5em;
 }
 .icon{
     margin-top: 0.1em;
-    height: 3em;
-    width: 3em;
+    height: 3rem;
+    width: 3rem;
     border-radius: 8px;
     position: relative;
     opacity: 0.8;
@@ -56,6 +55,7 @@
 #selectedIcon{
     opacity: 1;
     background: rgb(0, 249, 190);
+
 }
 .inlinks:hover{
       background:#fff;

@@ -1,0 +1,250 @@
+/* OUTSIDE DIV */
+.qBoard{
+    z-index: 100;
+    padding-left: 0.3em;
+    position: relative;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+}
+
+/* QUESTIONTITLE */
+#qBoardTitle{
+    height: 2.7em;
+    padding: 0.2em;
+    border-bottom: 0.2rem solid #9a3b3b;
+    display: grid;
+    grid-template-columns: 2fr 2.5fr 1fr;
+    font-family: "Segoe UI";
+    color: rgba(255, 255, 255, 0.86);
+
+
+}
+
+#qBoardTitle:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+#title{
+    padding-top: 0.4rem;
+    padding-left: 0.5rem;
+    font-size: 1.5em;
+}
+
+.dropDown{
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: transform 0.3s ease;
+    -moz-transition: transform 0.3s ease;
+    -o-transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
+}
+.dropDown:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+#iconA{
+    transform: rotate(0deg);
+
+}
+#iconA{
+    transform: rotate(180deg);
+
+}
+
+#dropDownIcon{
+    float: right;
+    margin: auto;
+    margin-right: 0.2em;
+}
+
+#qCount {
+    margin: auto;
+    margin-left: 0;
+    padding: 0.1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: #9a3b3b;
+    border:  0.1em solid #decece;
+    border-radius: 0.6em;
+}
+
+
+/* DROPDOWN QUESTION AREA */
+
+.qcontainer{
+    position: fixed;
+    top: 3.2rem;
+
+    box-sizing: border-box;
+
+    -webkit-transition: height 0.4s ease;
+    -moz-transition: height 0.4s ease;
+    -o-transition: height 0.4s ease;
+    transition: height 0.4s ease;
+
+}
+.qArea{
+
+    border-radius: 0.1rem;
+    background-color: rgba(13, 17, 18, 0.94);
+    padding: 0.5em;
+    padding-bottom: 0;
+    overflow-y: auto;
+    bottom: 5rem;
+
+}
+
+
+
+#hidden{
+    visibility: collapse;
+    height: 0%;
+}
+#visible{
+    visibility: visible;
+    height: 60%;
+}
+
+.questionCard{
+    background-color: rgb(237, 237, 237);
+    display: grid;
+    grid-template-columns: 5% 95%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 3px 10px 0 rgba(0, 0, 0, 0.5);
+    font-family: "Segoe UI";
+    padding: 0.3em;
+    margin-bottom: 0.3em;
+    color: rgba(13, 17, 18, 0.94);
+    border-radius: 0.1em;
+}
+.votingCard{
+    margin: auto;
+    text-align: center;
+}
+#question{
+
+    margin: auto;
+    margin-left: 5%;
+
+}
+
+.vote{
+    height: 1em;
+    width: 1em;
+    top: 50%;
+    left: 50%;
+    fill: none;
+    stroke: rgb(0, 0, 0);
+
+}
+.vote:hover{
+    cursor: pointer;
+}
+
+#downvote{
+    transform: rotate(180deg);
+}
+
+#upvote:hover{
+    fill: rgb(89, 129, 95);
+}
+#downvote:hover{
+    fill: rgb(235, 120, 120);
+
+}
+
+#voteCount{
+
+    font-family: "Calibri";
+    font-size: 0.8em;
+    left: 50%;
+
+}
+
+
+/* INPUT */
+.inputcard{
+
+    border-top: 0.2rem solid #9a3b3b;
+    border-radius: 0.1rem;
+    background-color: rgba(13, 17, 18, 0.94);
+    display: grid;
+    grid-template-columns: 90% 10%;
+    padding: 0.3rem;
+    padding-right: 0.3rem;
+    padding-left: 0.5rem;
+
+    position: sticky;
+    bottom: 0%;
+    width: auto;
+
+
+}
+.input{
+    height: 4rem;
+}
+
+input:focus{
+    box-shadow: 0 0 1pt 2pt rgba(201, 100, 100, 0.7);
+    outline: none;
+}
+input[type=text]{
+
+    height: 100%;
+    width: 100%;
+
+    color: rgba(13, 17, 18, 0.94);
+
+    font-family: "Calibri";
+    padding: 0;
+    border-radius: 0.3rem;
+    border-width: 0;
+}
+
+
+.attachIcon{
+
+    padding-left: 0.05rem;
+    stroke: rgba(13, 17, 18, 0.94);
+    fill: rgba(13, 17, 18, 0.94);
+    margin: auto;
+}
+
+.attachIcon:hover{
+    cursor: pointer;
+
+    stroke: rgb(164, 67, 67);
+    fill: rgb(164, 67, 67);
+
+}
+
+#attachments{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    background: white;
+    margin-left: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+#screenclip{
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+#attach{
+    height: 1.5rem;
+    width: auto;
+    margin: auto;
+}
+
+#clipIcon{
+    border-bottom: 0.1rem solid rgb(170, 64, 64);
+    margin: auto;
+}
+
+#sClip{
+    margin: auto;
+}
