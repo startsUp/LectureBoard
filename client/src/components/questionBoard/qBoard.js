@@ -8,7 +8,6 @@ class QuestionBoard extends Component {
         this.state = {
             hidden : true,
             hover: false,
-
         }
         this.show = this.show.bind(this);
         this.changeColor = this.changeColor.bind(this);
@@ -51,7 +50,7 @@ class QuestionBoard extends Component {
             return(this.getQuestionCard(question));
         });
 
-        const icon = <svg xmlns="http://www.w3.org/2000/svg" className='dropDown' id={this.state.hidden ? 'icon' : 'iconA'} onClick={this.show} width="180mm" height="180mm" viewBox="0 0 180 180">
+        const icon = <svg xmlns="http://www.w3.org/2000/svg" className='dropDown' id={this.props.show ? 'iconA':'icon'} onClick={this.show} width="180mm" height="180mm" viewBox="0 0 180 180">
                         <path d="M89.288 51.602L22.112 120.65l136.661-.177z" fill="#f9fffe" stroke="ivory" stroke-width="5.455"/>
                      </svg>;
 
@@ -62,17 +61,26 @@ class QuestionBoard extends Component {
         const screenclip = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='attachIcon' id='screenclip'>
                             <path d="M374.226.499h-70.819v39.922h70.819c11.58 0 21.002 9.402 21.002 20.959v70.862h39.922V61.38c0-33.57-27.331-60.881-60.924-60.881zM395.268 172.164h39.922v91.821h-39.922zM60.881.543C27.311.543 0 27.874 0 61.467v70.819h39.922V61.467c0-11.581 9.402-21.002 20.959-21.002h70.862V.543H60.881zM171.665.499h91.821v39.922h-91.821zM171.665 395.727h91.821v39.922h-91.821zM60.968 395.727c-11.581 0-21.003-9.402-21.003-20.959v-70.862H.043v70.862c0 33.57 27.331 60.881 60.924 60.881h70.819v-39.922H60.968zM0 172.164h39.922v91.821H0zM435.15 395.727v-91.821h-39.922v91.821h-91.821v39.922h91.821v75.852h39.922v-75.852H512v-39.922z"/>
                            </svg>;
-        const input = <div className='inputcard'><div><form className='input'><input type='text' id='textbox'></input></form></div><div id='attachments'><div id='clipIcon'>{attach}</div><div id='sClip'>{screenclip}</div></div></div>;
-        const questionArea = <div className='qcontainer' id={this.state.hidden ? 'hidden' : 'visible'}>
+        const input = <div className='inputcard'>
+                        <div>
+                            <form className='input'>
+                            <input type='text' id='textbox'></input>
+                            </form>
+                        </div>
+                        <div id='attachments'>
+                            <div id='clipIcon'>{attach}</div>
+                            <div id='border'/>
+                            <div id='sClip'>{screenclip}</div>
+                        </div>
+                      </div>;
+        const questionArea = <div className='qcontainer' id={this.props.show ? 'visible' : 'hidden' }>
                                {questions}
                                {input}
                              </div>;
     return(
 
-      <div className='qBoard'>
-        <div id='qBoardTitle' onClick={this.show}><div id='title'>Questions</div> <div id='qCount'>{this.props.newQ}</div><div id='dropDownIcon'>{icon}</div></div>
+      <div className='qBoard' style={{display:(this.props.show) ? '' : 'none'}}>
         {questionArea}
-
       </div>
 
     );

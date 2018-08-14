@@ -2,10 +2,11 @@
       display:grid;
       width: 100%;
       /* grid-template-columns:1fr 1fr 1fr;*/
-      grid-template-columns: 1fr 6fr 2fr;
-      grid-gap:1em;
+      grid-template-columns: 20% 80%;
+
       background-color: rgba(13, 17, 18, 0.94);
-      grid-auto-rows: 3.2rem;
+      grid-template-rows: 1fr;
+      height: 3.2rem;
 
 
 }
@@ -23,24 +24,58 @@
     position: relative;
 }
 
-.icons{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+.menuItems{
+    -webkit-transition: opacity 25s ease;
+    -moz-transition: opacity 25s ease;
+    -o-transition: opacity 25s ease;
+    transition: opacity 25s ease;
 }
-.icons > span{
-    padding-right: 0.5em;
+#hMenuItems{
+    display: none;
+
 }
-.icon{
-    margin-top: 0.1em;
-    height: 3rem;
-    width: 3rem;
-    border-radius: 8px;
-    position: relative;
+#sMenuItems{
+    display: block;
+
+}
+#menu{
+
+}
+#menudown{
+        transform: rotate(90deg);
+        stroke: rgb(0, 249, 190);
+        fill: rgb(0, 249, 190);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
+}
+.svgIcon{
+    height: 1.5em;
+    width: 1.5em;
+    margin: 0.35rem auto auto 0.5rem;
+    padding: 0.5rem;
+    stroke: rgb(222, 222, 222);
+    fill: rgb(222, 222, 222);
     opacity: 0.8;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 4px;
+    background: rgba(13, 17, 18, 0.94);
+    -webkit-transition: transform 0.25s ease;
+    -moz-transition: transform 0.25s ease;
+    -o-transition: transform 0.25s ease;
+    transition: transform 0.25s ease;
 
 }
+.svgIcon:hover{
+    cursor: pointer;
+    stroke: rgb(0, 249, 190);
+    fill: rgb(0, 249, 190);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
 
+}
+#selected-svg-icon{
+    stroke: rgb(0, 249, 190);
+    fill: rgb(0, 249, 190);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
+}
 
 
 #profilePic{
@@ -54,16 +89,110 @@
 
 #selectedIcon{
     opacity: 1;
-    background: rgb(0, 249, 190);
+
 
 }
-.inlinks:hover{
-      background:#fff;
-      padding:1em;
+.popupWrapper{
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.46);
+    height: 100vh;
+    width: 100vw;
+    top: 0%;
+    left: 0%;
+    z-index: 1000;
+}
+.popup{
+    position: absolute;
+    background-color: rgba(13, 17, 18, 0.94);
+    width: 18em;
+    height: 25em;
+    padding: 0;
+    transform: translate(-50%, -50%);
+    top: 50vh;
+    left: 50vw;
+    text-align: center;
+    border-radius: 0.4em;
+    display: grid;
+    grid-template-rows: 14% 0.5% 85.5%;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
 }
 
-.icon:hover{
+.popup-content{
+    grid-row-start: 2;
+
+}
+
+#borderDiv{
+    background-color: rgb(0, 249, 190);
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+#closeIcon{
+    position: absolute;
+    right: 0%;
+}
+
+#qBoardMenu{
+
+}
+#qIcon{
+    stroke-width: 0.35em;
+    height: 2em;
+    width: 2em;
+    padding: 0.25em;
+    float: right;
+    margin-right: 0.6em;
+    position: relative;
+    z-index: 200;
+}
+#qIcon-selected{
+    stroke-width: 0.35em;
+    height: 2em;
+    width: 2em;
+    padding: 0.25em;
+    float: right;
+    margin-right: 0.6em;
+    position: relative;
+    z-index: 200;
+    stroke: rgb(0, 249, 190);
+    fill: rgb(0, 249, 190);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
+}
+#cIcon{
+    height: 1em;
+    width: 1em;
+    margin-right: 0;
+    padding: 0.5em;
+    stroke: rgb(222, 222, 222);
+    fill: rgb(222, 222, 222);
     opacity: 0.8;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0.4em;
+
+}
+#cIcon:hover{
+    cursor: pointer;
+    stroke: rgb(0, 249, 190);
+    fill: rgb(0, 249, 190);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
+}
+
+#popupTitle{
+    margin: auto;
+    font-family: "Segoe UI";
+    font-size: 2.3em;
+
+    color: rgb(210, 210, 210);
+}
+
+#popupDesc{
+    font-family: "Segoe UI";
+    font-size: 1.7em;
+
+    color: rgb(210, 210, 210);
+    margin: 1.3em 1em 1.3em 1em;
 
 }

@@ -166,7 +166,7 @@ class DrawBoard extends Component {
         //console.log(strokes);
 
         return(
-          <svg className='board' id='mainBoard' zoomAndPan='magnify' onMouseDown={this.startDraw} onMouseMove={this.draw} onMouseUp={this.finishDraw} onMouseLeave={this.finishDraw}>
+          <svg className='board' id='mainBoard' zoomAndPan='magnify' onTouchStart={this.startDraw} onTouchMove={this.draw} onTouchEnd={this.finishDraw} onMouseDown={this.startDraw} onMouseMove={this.draw} onMouseUp={this.finishDraw} onMouseLeave={this.finishDraw}>
          {strokes}
           </svg>
 
