@@ -55,9 +55,9 @@
     stroke: rgb(222, 222, 222);
     fill: rgb(222, 222, 222);
     opacity: 0.8;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 2px 4px 0 rgba(222, 222, 222, 0.1), 0 4px 10px 0 rgba(222, 222, 222, 0.1);
     border-radius: 4px;
-    background: rgba(13, 17, 18, 0.94);
+    background:rgb(0, 0, 0);
     -webkit-transition: transform 0.25s ease;
     -moz-transition: transform 0.25s ease;
     -o-transition: transform 0.25s ease;
@@ -68,8 +68,14 @@
     cursor: pointer;
     stroke: rgb(0, 249, 190);
     fill: rgb(0, 249, 190);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    box-shadow: 0 4px 8px 0 rgba(222, 222, 222, 0.2), 0 6px 10px 0 rgba(222, 222, 222, 0.4);
 
+}
+
+.svgIcon:active{
+    background:rgba(0, 0, 0, 0.4);
+    border: 0.05em solid rgb(0, 249, 190);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0);
 }
 #selected-svg-icon{
     stroke: rgb(0, 249, 190);
@@ -142,9 +148,9 @@
     stroke-width: 0.35em;
     height: 2em;
     width: 2em;
-    padding: 0.25em;
+    padding: 0.25em 0.35em 0.25em 0.35em;
     float: right;
-    margin-right: 0.6em;
+    margin-right: 0.45em;
     position: relative;
     z-index: 200;
 }
@@ -154,7 +160,7 @@
     width: 2em;
     padding: 0.25em;
     float: right;
-    margin-right: 0.6em;
+    margin-right: 0.45em;
     position: relative;
     z-index: 200;
     stroke: rgb(0, 249, 190);

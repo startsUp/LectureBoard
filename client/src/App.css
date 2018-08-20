@@ -1,17 +1,15 @@
 .body{
     overflow-x: hidden;
+
     margin: 0;
     padding: 0;
-    height: 100vh;
-
-
-}
-
-.container{
+    height: auto;
     display: grid;
     grid-template-rows: 5% 95%;
-    
+
+
 }
+
 
 .App {
   text-align: center;

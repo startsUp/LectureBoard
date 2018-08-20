@@ -42,7 +42,11 @@ class NavBar extends Component {
         if(id==='popup')
             this.setState({show: Object.assign({}, this.state.show, {hostPopup: !this.state.show.hostPopup})});
         if(id==='qBoard')
-            this.setState({show: Object.assign({}, this.state.show, {questionBoard: !this.state.show.questionBoard})});
+        {
+            this.setState({questionBoard: !this.state.questionBoard});
+            this.props.onToggle();
+        }
+
     }
 
     getIcon(props, i) {
@@ -50,7 +54,7 @@ class NavBar extends Component {
         if(i===0){
             return(
                 <div key={i} className='icon'>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onClick={()=>this.toggle('menu')} className='svgIcon' shape-rendering='geometricPrecision' id={this.state.show.menu ? 'menudown' : 'menu'} >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onClick={()=>this.toggle('menu')} className='svgIcon' shapeRendering='geometricPrecision' id={this.state.show.menu ? 'menudown' : 'menu'} >
                         <path d="M24 3c0-.6-.4-1-1-1H1c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h22c.6 0 1-.4 1-1V3zM24 11c0-.6-.4-1-1-1H1c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h22c.6 0 1-.4 1-1v-2zM24 19c0-.6-.4-1-1-1H1c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h22c.6 0 1-.4 1-1v-2z"/>
                     </svg>
                 </div>
@@ -59,7 +63,7 @@ class NavBar extends Component {
 
         else if(i===1){
             return(<span key={i}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="25mm" viewBox="0 0 20 25" onClick={() => this.updateSelection(i)} className='icon' shape-rendering='geometricPrecision' id={props.id}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="25mm" viewBox="0 0 20 25" onClick={() => this.updateSelection(i)} className='icon' shapeRendering='geometricPrecision' id={props.id}>
                         <g transform="translate(0 -272)" fill="none" stroke={props.stroke}>
                             <path d="M6.187 287.891l7.508-.03-.891-4.989-5.747.051z" stroke-width=".496"/>
                             <ellipse ry=".052" rx="3.808" cy="282.517" cx="9.845" stroke-width=".417"/>
@@ -72,15 +76,12 @@ class NavBar extends Component {
 
         }
         else{
-            return(<span key={i}><svg xmlns="http://www.w3.org/2000/svg" width="200mm" height="250mm" viewBox="0 0 200 250" onClick={() => this.updateSelection(i)} className='icon' shape-rendering='geometricPrecision' id={props.id}>
+            return(<span key={i}><svg xmlns="http://www.w3.org/2000/svg" width="200mm" height="250mm" viewBox="0 0 200 250" onClick={() => this.updateSelection(i)} className='icon' shapeRendering='geometricPrecision' id={props.id}>
             <g fill="none" stroke={props.stroke} stroke-width="4.677"><path d="M77.012 116.738c-13.838-9.917-13.506-34.945 23.811-78.87 4.857 38.12 21.444 32.047 27.88 54.922 3.68 13.08-6.916 24.453-18.698 28.347-8.823 2.916-24.436 1.962-32.993-4.399"/><path d="M77.012 116.738l-5.732 19.933c23.846 8.592 43.328 2.684 56.79-.224l-7.424-20.992"/><path d="M71.28 136.67s-8.407 45.324.232 91.01c3.095 16.368 19.291 73.784 31.456 73.703 16.136-.108 26.212-61.776 27.403-73.495 4.648-45.757-2.301-91.44-2.301-91.44"/></g>
             </svg></span>);
         }
     }
 
-    getQuestionCard(question){
-        return(<div className='questionCard'>{question}</div>);
-    }
 
     render(){
 
@@ -88,9 +89,9 @@ class NavBar extends Component {
             return(this.getIcon(props, index));
         });
         const host = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.13 80.13" className='svgIcon' id={this.state.show.hostPopup ? 'selected-svg-icon' : ''} onClick={()=>this.toggle('popup')}><g>
-            <path d="M48.355 17.922c3.705 2.323 6.303 6.254 6.776 10.817a11.69 11.69 0 0 0 4.966 1.112c6.491 0 11.752-5.261 11.752-11.751 0-6.491-5.261-11.752-11.752-11.752-6.429.002-11.644 5.169-11.742 11.574zm-7.699 24.062c6.491 0 11.752-5.262 11.752-11.752s-5.262-11.751-11.752-11.751c-6.49 0-11.754 5.262-11.754 11.752s5.264 11.751 11.754 11.751zm4.985.801h-9.972c-8.297 0-15.047 6.751-15.047 15.048v12.195l.031.191.84.263c7.918 2.474 14.797 3.299 20.459 3.299 11.059 0 17.469-3.153 17.864-3.354l.785-.397h.084V57.833c.003-8.297-6.747-15.048-15.044-15.048zm19.443-12.132h-9.895a14.483 14.483 0 0 1-4.47 10.088c7.375 2.193 12.771 9.032 12.771 17.11v3.758c9.77-.358 15.4-3.127 15.771-3.313l.785-.398h.084V45.699c0-8.296-6.75-15.046-15.046-15.046zm-45.049-.8c2.299 0 4.438-.671 6.25-1.814a14.544 14.544 0 0 1 5.467-9.276c.012-.22.033-.438.033-.66 0-6.491-5.262-11.752-11.75-11.752-6.492 0-11.752 5.261-11.752 11.752 0 6.488 5.26 11.75 11.752 11.75zm10.554 10.888a14.492 14.492 0 0 1-4.467-10.032c-.367-.027-.73-.056-1.104-.056h-9.971C6.75 30.653 0 37.403 0 45.699v12.197l.031.188.84.265c6.352 1.983 12.021 2.897 16.945 3.185v-3.683c.002-8.078 5.396-14.915 12.773-17.11z"/>
-            </g>
-        </svg>;
+                        <path d="M48.355 17.922c3.705 2.323 6.303 6.254 6.776 10.817a11.69 11.69 0 0 0 4.966 1.112c6.491 0 11.752-5.261 11.752-11.751 0-6.491-5.261-11.752-11.752-11.752-6.429.002-11.644 5.169-11.742 11.574zm-7.699 24.062c6.491 0 11.752-5.262 11.752-11.752s-5.262-11.751-11.752-11.751c-6.49 0-11.754 5.262-11.754 11.752s5.264 11.751 11.754 11.751zm4.985.801h-9.972c-8.297 0-15.047 6.751-15.047 15.048v12.195l.031.191.84.263c7.918 2.474 14.797 3.299 20.459 3.299 11.059 0 17.469-3.153 17.864-3.354l.785-.397h.084V57.833c.003-8.297-6.747-15.048-15.044-15.048zm19.443-12.132h-9.895a14.483 14.483 0 0 1-4.47 10.088c7.375 2.193 12.771 9.032 12.771 17.11v3.758c9.77-.358 15.4-3.127 15.771-3.313l.785-.398h.084V45.699c0-8.296-6.75-15.046-15.046-15.046zm-45.049-.8c2.299 0 4.438-.671 6.25-1.814a14.544 14.544 0 0 1 5.467-9.276c.012-.22.033-.438.033-.66 0-6.491-5.262-11.752-11.75-11.752-6.492 0-11.752 5.261-11.752 11.752 0 6.488 5.26 11.75 11.752 11.75zm10.554 10.888a14.492 14.492 0 0 1-4.467-10.032c-.367-.027-.73-.056-1.104-.056h-9.971C6.75 30.653 0 37.403 0 45.699v12.197l.031.188.84.265c6.352 1.983 12.021 2.897 16.945 3.185v-3.683c.002-8.078 5.396-14.915 12.773-17.11z"/>
+                        </g>
+                    </svg>;
         const qBIcon =
                 <div id='qBoardMenu'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='svgIcon' id={this.state.show.questionBoard ? 'qIcon-selected' : 'qIcon'} onClick={()=>this.toggle('qBoard')} >
@@ -100,7 +101,9 @@ class NavBar extends Component {
                     </svg>
                 </div>;
 
-        const cancel = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212.982 212.982" id='cIcon'><path d="M131.804 106.491l75.936-75.936c6.99-6.99 6.99-18.323 0-25.312-6.99-6.99-18.322-6.99-25.312 0L106.491 81.18 30.554 5.242c-6.99-6.99-18.322-6.99-25.312 0-6.989 6.99-6.989 18.323 0 25.312l75.937 75.936-75.937 75.937c-6.989 6.99-6.989 18.323 0 25.312 6.99 6.99 18.322 6.99 25.312 0l75.937-75.937 75.937 75.937c6.989 6.99 18.322 6.99 25.312 0 6.99-6.99 6.99-18.322 0-25.312l-75.936-75.936z"/></svg>;
+        const cancel = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212.982 212.982" id='cIcon'>
+                        <path d="M131.804 106.491l75.936-75.936c6.99-6.99 6.99-18.323 0-25.312-6.99-6.99-18.322-6.99-25.312 0L106.491 81.18 30.554 5.242c-6.99-6.99-18.322-6.99-25.312 0-6.989 6.99-6.989 18.323 0 25.312l75.937 75.936-75.937 75.937c-6.989 6.99-6.989 18.323 0 25.312 6.99 6.99 18.322 6.99 25.312 0l75.937-75.937 75.937 75.937c6.989 6.99 18.322 6.99 25.312 0 6.99-6.99 6.99-18.322 0-25.312l-75.936-75.936z"/>
+                       </svg>;
         // const popupDisplay = this.state
         const code = 'AFE34C';
         const popup = <div className='popupWrapper' style={{display:(this.state.show.hostPopup) ? '' : 'none'}} onClick={()=>this.toggle('popup')}>
@@ -109,7 +112,9 @@ class NavBar extends Component {
                             <div id='borderDiv'/>
                             <div id='closeIcon'>{cancel}</div>
                             <div id='popupDesc'>
-                                Room Code:<br/> <h2>{code}</h2><br/><div style={{fontSize: '1rem'}}>People can join your session using this code.</div>
+                                Room Code:<br/>
+                                <h2>{code}</h2><br/>
+                                <div style={{fontSize: '1rem'}}>People can join your session using this code.</div>
                             </div>
                         </div>
                       </div>;
@@ -123,11 +128,8 @@ class NavBar extends Component {
                 {host}
                 {popup}
               </div>
-
           </div>
           {qBIcon}
-        <QuestionBoard questions={this.props.questions} newQ={this.props.newQ} show={this.state.show.questionBoard}/>
-
       </div>
 
     );

@@ -61,25 +61,25 @@ class DrawBoard extends Component {
         this.finishStroke= this.finishStroke.bind(this);
 
 
-        ws = new WebSocket('ws://localhost:40510');
-        ws.onopen = () => {
-            console.log('websocket is connected ...');
-        }
-
-        ws.onmessage = (message) => {
-            var flag = message.data[0];
-
-            if(flag==='M')
-            {
-                this.setState({path:message.data});
-            }
-            else
-            {
-                const cPath = this.state.path;
-                this.setState({path:cPath+message.data});
-            }
-            console.log(flag);
-        }
+        // ws = new WebSocket('ws://localhost:40510');
+        // ws.onopen = () => {
+        //     console.log('websocket is connected ...');
+        // }
+        //
+        // ws.onmessage = (message) => {
+        //     var flag = message.data[0];
+        //
+        //     if(flag==='M')
+        //     {
+        //         this.setState({path:message.data});
+        //     }
+        //     else
+        //     {
+        //         const cPath = this.state.path;
+        //         this.setState({path:cPath+message.data});
+        //     }
+        //     console.log(flag);
+        // }
     }
 
     startNewStroke(nPath)
@@ -120,8 +120,8 @@ class DrawBoard extends Component {
             lastPoint: coords,
          });
 
-        if(ws.readyState === WebSocket.OPEN)
-            ws.send(nPath);
+        // if(ws.readyState === WebSocket.OPEN)
+        //     ws.send(nPath);
     }
 
 

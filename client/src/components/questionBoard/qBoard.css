@@ -7,11 +7,14 @@
     position: absolute;
     height: 100vh;
     padding-top: 3.2em;
-
+    width: 25%;
     box-sizing: border-box;
 
 
 }
+
+
+
 
 /* QUESTIONTITLE */
 #qBoardTitle{
@@ -81,37 +84,40 @@
     grid-template-rows: 85% 15%;
     box-sizing: border-box;
     border-top: 0.1em solid rgb(0, 144, 147);
-    -webkit-transition: height 0.4s ease;
-    -moz-transition: height 0.4s ease;
-    -o-transition: height 0.4s ease;
-    transition: height 0.4s ease;
+    height: 100%;
+    -webkit-transition: opacity 0.5s ease-out;
+    -moz-transition: opacity 0.5s ease-out;
+    -o-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+
 
 }
-.qArea{
+#qArea{
 
 
     overflow: auto;
 
   /* for Firefox */
-      min-height: 0;
+    min-height: 0;
 
     background-color: rgba(13, 17, 18, 0.94);
     padding: 0.5em;
     padding-bottom: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     bottom: 5rem;
+
 
 }
 
 
 
 #hidden{
-    visibility: collapse;
-    height: 0%;
+    opacity: 0;
 }
 #visible{
-    visibility: visible;
-    height: 100%;
+
+    opacity: 1;
 }
 
 .questionCard{
@@ -121,18 +127,28 @@
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 3px 10px 0 rgba(0, 0, 0, 0.5);
     font-family: "Segoe UI";
     padding: 0.3em;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.4em;
     color: rgba(13, 17, 18, 0.94);
     border-radius: 0.1em;
+    height: auto;
+    box-sizing: border-box;
+
 }
 .votingCard{
     margin: auto;
     text-align: center;
 }
-#question{
-
+.question{
+    background-color: rgba(103, 114, 221, 0);
+    outline: none;
+    border: none;
+    overflow-y: hidden;
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0.1em;
     margin: auto;
-    margin-left: 5%;
+    padding: 0 0.3em 0 1em;
 
 }
 
@@ -179,34 +195,37 @@
 
     background-color: rgba(13, 17, 18, 0.94);
     display: grid;
-    grid-template-columns: 92% 8%;
+    grid-template-columns: 70% 10% 20%;
     padding: 0.4em;
     padding-right: 0.3rem;
     padding-left: 0.5rem;
 
 
-    width: auto;
+    width:auto;
 
 
 }
 .input{
     height: 100%;
+
+
 }
 
-input:focus{
+#textbox:focus{
     box-shadow: 0 0 1pt 2pt rgba(201, 100, 100, 0.7);
     outline: none;
 }
-input[type=text]{
-
+#textbox{
+    padding: 0.5em;
     height: 100%;
     width: 100%;
 
     color: rgba(13, 17, 18, 0.94);
 
-    font-family: "Calibri";
-    padding: 0;
-    border-radius: 0.3rem;
+    font-family: "Segoe UI";
+    font-size: 1em;
+    box-sizing: border-box;
+    border-radius: 0.3rem 0 0 0.3rem;
     border-width: 0;
 }
 
@@ -231,8 +250,8 @@ input[type=text]{
     display: grid;
     grid-template-rows: 49% 2% 49%;
     background: white;
-    margin-left: 0.3rem;
-    border-radius: 0.3rem;
+    border-radius: 0 0.3rem 0.3rem 0;
+    border-left: 0.1em solid rgb(0, 144, 147);
 }
 
 #screenclip{
@@ -256,4 +275,40 @@ input[type=text]{
 }
 #sClip{
     margin: auto;
+}
+#sendIcon{
+    fill:  rgb(237, 237, 237);
+    stroke:  rgb(237, 237, 237);
+    height: 1.8rem;
+    width: 2.3em;
+    margin-left: 0.3em;
+    margin-top: 0;
+}
+
+#sendIcon:hover{
+    stroke: rgb(0, 249, 190);
+    fill: rgb(0, 249, 190);
+}
+
+#submit{
+    margin: 0 auto;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 1025px) {
+    .qBoard{
+        width: 45%;
+    }
+    .inputcard{
+        grid-template-columns: 73% 10% 17%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .qBoard{
+        width: 100%;
+    }
+    .inputcard{
+        grid-template-columns: 73% 10% 17%;
+    }
 }
