@@ -38,7 +38,7 @@ class App extends Component {
 
     updateScore(vote, index)
     {
-        const questions = this.state.questions;
+        const questions = this.state.questions.slice();
         const score = questions[index].score;
         const updatedQuestion = {...questions[index], score: (vote) ? score+1: score-1};
         questions[index] = updatedQuestion;

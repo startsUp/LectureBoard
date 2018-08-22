@@ -12,8 +12,17 @@ var ws;
 function getCursorPosition(event) {
     var svgBoard = document.getElementById('mainBoard');
     var rectB = svgBoard.getBoundingClientRect();
-    var cx = event.clientX - rectB.left;
-    var cy = event.clientY - rectB.top;
+    var cx, cy;
+    cx = event.pageX - rectB.left;
+    cy = event.pageY - rectB.top;
+
+    if(!cx || !cy)
+    {
+        cx = event.touches[0].pageX - rectB.left;
+        cy = event.touches[0].pageY - rectB.top;
+    }
+
+
     return  [cx, cy];
 }
 
@@ -24,11 +33,11 @@ function getPath(path){
 }
 
 class Path extends Component {
-    shouldComponentUpdate(newProps){
-        return this.props.count === 0;
-
+    shouldComponentUpdate(nextProps, nextState) {
+        return (this.props.id === this.props.count)
     }
     render(){
+
         return(
             <path d={this.props.desc} className='path' zoomAndPan='magnify'/>
         );
@@ -43,7 +52,7 @@ class DrawBoard extends Component {
             strokes : [],
             strokeCount: 0,
             drawing : false,
-            strokeWidth : 0.5,
+            strokeWidth : '0.5',
             path : "",
             lastPoint : [0, 0],
             socket: ws
@@ -101,12 +110,12 @@ class DrawBoard extends Component {
             nPath = "M"+ coords[0] + "," + coords[1] + " ";
         else
             nPath = "L"+ coords[0] + "," + coords[1] + " ";
-        const nStrokes = this.state.strokes;
+        var nStrokes = this.state.strokes.slice();
         const updatedPath = cPath + nPath;
 
         if(!nStrokes)
         {
-            nStrokes.push(updatedPath);
+            nStrokes = [...this.state.strokes, updatedPath];
         }
         else
         {
@@ -127,6 +136,7 @@ class DrawBoard extends Component {
 
     startDraw(e)
     {
+
         let coords = getCursorPosition(e);
         this.updateState(coords, 'i');
     }
@@ -134,6 +144,7 @@ class DrawBoard extends Component {
 
     draw(e)
     {
+
         const isDrawing = this.state.drawing;
         if(isDrawing)
         {
@@ -145,6 +156,7 @@ class DrawBoard extends Component {
     }
 
     finishDraw(e){
+
         const isDrawing = this.state.drawing;
         if(isDrawing)
         {
@@ -158,15 +170,16 @@ class DrawBoard extends Component {
 
     render(){
         const cStrokes = this.state.strokeCount;
+        const ratio = 70/99;
         const strokes = this.state.strokes.map((stroke, index) => {
             return(
-                <Path key={index} desc={stroke} count={cStrokes-index}/>
+                <Path key={index} strokeWidth={this.state.strokeWidth} desc={stroke} count={this.state.strokeCount} id={index}/>
             );
         });
         //console.log(strokes);
 
         return(
-          <svg className='board' id='mainBoard' zoomAndPan='magnify' onTouchStart={this.startDraw} onTouchMove={this.draw} onTouchEnd={this.finishDraw} onMouseDown={this.startDraw} onMouseMove={this.draw} onMouseUp={this.finishDraw} onMouseLeave={this.finishDraw}>
+          <svg className='board' id='mainBoard'  onTouchStart={this.startDraw} onTouchMove={this.draw} onTouchEnd={this.finishDraw} onMouseDown={this.startDraw} onMouseMove={this.draw} onMouseUp={this.finishDraw} onMouseLeave={this.finishDraw}>
          {strokes}
           </svg>
 

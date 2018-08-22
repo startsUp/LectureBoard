@@ -10,7 +10,20 @@
 
 }
 
+.container{
+    box-sizing: border-box;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 3.2rem auto;
 
+}
+
+#canvasArea{
+    box-sizing: border-box;
+    height: 100%;
+    padding: 1em 0;
+    margin: 0 auto;
+}
 .App {
   text-align: center;
 }
