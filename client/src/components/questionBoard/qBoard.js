@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
+
 import './qBoard.css';
 
 class QuestionCard extends Component{
-    // constructor(props){
-    //     super(props);
-    //     this.getVoteIcon = this.handleSubmit.bind(this);
-    // }
-    auto_grow(element)
-    {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight)+"px";
+    constructor(props){
+        super(props);
+
+        this.auto_grow = this.auto_grow.bind(this);
     }
+    shouldComponentUpdate(nextProps, nextState){
+        return this.props.score !== nextProps.score;
+    }
+
 
 
 
@@ -19,27 +20,39 @@ class QuestionCard extends Component{
                  <path d="M89.288 51.602L22.112 120.65l136.661-.177z"  strokeWidth="5.455"/>
                </svg>);
     }
+    componentDidUpdate(){
 
-    componentDidUpdate()
+
+
+
+    }
+
+    auto_grow()
     {
         var element = document.getElementById(this.props.id);
         if (element !== null)
-            this.auto_grow(element);
+        {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight)+"px";
+        }
+
     }
 
+
     render(){
+
         const upvote = this.getVoteIcon(true);
         const downvote = this.getVoteIcon(false);
         const qCardID = 'qCard' + this.props.index;
         console.log(qCardID);
-        return(<div className='questionCard' id={qCardID}>
+        return(<li className='questionCard' id={qCardID} onClick={this.auto_grow}>
                 <div className='votingCard'>
                     <div>{upvote}</div>
                     <div id='voteCount'>{this.props.score}</div>
                     <div>{downvote}</div>
                 </div>
-                <textarea disabled className='question' id={this.props.id}>{this.props.question}</textarea>
-               </div>);
+                <textarea disabled className='question' style={{height: "5px" +(this.scrollHeight)+"px"}} id={this.props.id}>{this.props.question}</textarea>
+               </li>);
     }
 
 }
@@ -50,16 +63,36 @@ class QuestionBoard extends Component {
         this.state = {
             hidden : true,
             hover: false,
+            questions : [{question:'Can this show up on the board?Can this show up on the board? Can this show up on the board?Can this show up on the board?', score:99},
+                         {question:'Can this show up on the board?' , score:0}, {question:'Can this show up on the board?' , score:0}, {question:'Can this show up on the board?' , score:0}],
         }
         this.show = this.show.bind(this);
         this.changeColor = this.changeColor.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateScore = this.updateScore.bind(this);
     }
     show()
     {
         this.setState({hidden: !this.state.hidden});
     }
 
+    updateScore(vote, index)
+    {
+        console.log(vote);
+        const questions = this.state.questions.slice();
+        const score = questions[index].score;
+        const updatedScore = (vote) ? score+1: score-1;
+        const updatedQuestion = {...questions[index], score: updatedScore};
+
+        questions[index] = updatedQuestion;
+        this.setState({questions: questions});
+    }
+
+    broadcastQuestion(question){
+        this.setState({questions: [...this.state.questions, {question: question, score: 0}], newQ: this.state.newQ+1});
+        if(this.props.webSocket.readyState === WebSocket.OPEN)
+            this.props.webSocket.send(question);
+    }
 
     changeColor()
     {
@@ -75,15 +108,14 @@ class QuestionBoard extends Component {
     getQuestionCard(question, score, index)
     {
 
-        const id = 'question' + index;
-        return(<QuestionCard question={question} key={index} index={index} id={id} score={score} onVote={(val, index) => this.props.updateScore(val, index)}/>);
+
     }
 
     handleSubmit(e){
         e.preventDefault();
         const textBox = document.getElementById('textbox');
         var question = textBox.value;
-        this.props.newQuestion(question);
+        this.broadcastQuestion(question);
         textBox.value = '';
 
     }
@@ -94,8 +126,9 @@ class QuestionBoard extends Component {
     }
     render(){
 
-        const qB = this.props.questions.map((questionObject, index) => {
-            return(this.getQuestionCard(questionObject.question, questionObject.score,index));
+        const qB = this.state.questions.map((questionObject, index) => {
+            const id = 'question' + index;
+            return(<QuestionCard key={index} question={questionObject.question} index={index} id={id} score={questionObject.score} onVote={(val, index) => this.updateScore(val, index)}/>);
         });
 
         const icon = <svg xmlns="http://www.w3.org/2000/svg" className='dropDown' id={this.props.show ? 'iconA':'icon'} onClick={this.show} width="180mm" height="180mm" viewBox="0 0 180 180">

@@ -133,6 +133,12 @@
     height: auto;
     box-sizing: border-box;
 
+    -webkit-transition: height 2s ease-out;
+    -moz-transition: height 2s ease-out;
+    -o-transition: height 2s ease-out;
+    transition: height 2s ease-out;
+
+
 }
 .votingCard{
     margin: auto;

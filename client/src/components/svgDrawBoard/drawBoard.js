@@ -39,6 +39,7 @@ class Path extends Component {
     render(){
 
         return(
+
             <path d={this.props.desc} className='path' zoomAndPan='magnify'/>
         );
     }
@@ -138,17 +139,48 @@ class DrawBoard extends Component {
     {
 
         let coords = getCursorPosition(e);
+
+        /*
+        initialize all control points to coords
+        var c0 = coords;
+        var c1 = coords;
+        var c2 = coords;
+        var c3 = coords;
+
+        clear the 2d vector distance field
+        clearDistanceField();
+
+
+        */
+
+
         this.updateState(coords, 'i');
     }
 
+    corner(prevCoords, newCoords)
+    {
+
+    }
 
     draw(e)
     {
+
+
+
 
         const isDrawing = this.state.drawing;
         if(isDrawing)
         {
             let coords = getCursorPosition(e);
+
+            /*
+            test if the point is corner
+            var lastPoint = prevCoords;
+            if(corner(lastPoint, coords))
+                clear vector field
+
+
+            */
             this.updateState(coords, 'd');
         }
 
@@ -172,6 +204,7 @@ class DrawBoard extends Component {
         const cStrokes = this.state.strokeCount;
         const ratio = 70/99;
         const strokes = this.state.strokes.map((stroke, index) => {
+
             return(
                 <Path key={index} strokeWidth={this.state.strokeWidth} desc={stroke} count={this.state.strokeCount} id={index}/>
             );

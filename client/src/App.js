@@ -12,8 +12,6 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            questions : [{question:'Can this show up on the board?Can this show up on the board? Can this show up on the board?Can this show up on the board?', score:99},
-                         {question:'Can this show up on the board?' , score:0}, {question:'Can this show up on the board?' , score:0}, {question:'Can this show up on the board?' , score:0}],
             qBoardShow : false,
             roomCode: 'Not Coneected',
             newQ: 0,
@@ -28,24 +26,14 @@ class App extends Component {
             this.setState({questions: [...this.state.questions, {question: message.data, score: 0}], newQ: this.state.newQ+1});
         }
         this.show = this.show.bind(this);
-        this.broadcastQuestion = this.broadcastQuestion.bind(this);
-        this.updateScore = this.updateScore.bind(this);
+
     }
 
     show(){
         this.setState({qBoardShow: !this.state.qBoardShow});
     }
 
-    updateScore(vote, index)
-    {
-        const questions = this.state.questions.slice();
-        const score = questions[index].score;
-        const updatedQuestion = {...questions[index], score: (vote) ? score+1: score-1};
-        questions[index] = updatedQuestion;
-        this.setState(
-            questions: questions
-        );
-    }
+
 
 
     auto_grow(element) {
@@ -55,20 +43,15 @@ class App extends Component {
 
     }
 
-    broadcastQuestion(question){
-        this.setState({questions: [...this.state.questions, {question: question, score: 0}], newQ: this.state.newQ+1});
-        if(ws.readyState === WebSocket.OPEN)
-            ws.send(question);
-    }
 
     componentDidUpdate(){
-        var id = 'question' + (this.state.questions.length-1);
-        console.log(id);
-        var element = document.getElementById(id);
-        if (element !== null)
-            this.auto_grow(element);
-
-        element.parentNode.scrollTop = element.offsetTop;
+        // var id = 'question' + (this.state.questions.length-1);
+        // console.log(id);
+        // var element = document.getElementById(id);
+        // if (element !== null)
+        //     this.auto_grow(element);
+        //
+        // element.parentNode.scrollTop = element.offsetTop;
     }
 
 
@@ -77,7 +60,7 @@ class App extends Component {
       return (
           <div className='container'>
             <div><NavBar newQ={1} roomCode={this.state.roomCode} onToggle={this.show}/></div>
-            <QuestionBoard questions={this.state.questions} newQ={this.props.newQ} show={this.state.qBoardShow} newQuestion={this.broadcastQuestion} updateScore={this.updateScore}/>
+            <QuestionBoard newQ={this.props.newQ} show={this.state.qBoardShow} newQuestion={this.broadcastQuestion} webSocket={ws}/>
             <div id='canvasArea'><DrawBoard/></div>
           </div>
       );
