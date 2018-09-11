@@ -1,11 +1,11 @@
 .board{
-    background-color: rgba(244, 246, 245, 0.77);
+    background-color: white;
 
     height: 100%;
     touch-action: pinch-zoom;
     display: block;
     box-sizing: border-box;
-
+    width: 50vw;
 
 }
 

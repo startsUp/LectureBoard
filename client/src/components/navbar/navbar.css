@@ -38,8 +38,9 @@
     display: block;
 
 }
-#menu{
+.menu{
 
+    z-index: 300;
 }
 #menudown{
         transform: rotate(90deg);
@@ -66,10 +67,7 @@
 }
 .svgIcon:hover{
     cursor: pointer;
-    stroke: rgb(0, 249, 190);
-    fill: rgb(0, 249, 190);
-    box-shadow: 0 4px 8px 0 rgba(222, 222, 222, 0.2), 0 6px 10px 0 rgba(222, 222, 222, 0.4);
-
+    background:rgb(43, 43, 43);
 }
 
 .svgIcon:active{
@@ -100,7 +98,7 @@
 }
 .popupWrapper{
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.46);
+    background-color: rgba(0, 0, 0, 0.6);
     height: 100vh;
     width: 100vw;
     top: 0%;

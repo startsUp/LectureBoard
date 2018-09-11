@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './drawBoard.css';
 
 var ws;
+var fitCurve = require('fit-curve');
+
 
 
 //// TODO: Fitting Bezier Curve to store less info and smoothen curve
@@ -18,6 +20,7 @@ function getCursorPosition(event) {
 
     if(!cx || !cy)
     {
+        event.preventDefault();
         cx = event.touches[0].pageX - rectB.left;
         cy = event.touches[0].pageY - rectB.top;
     }
@@ -55,7 +58,7 @@ class DrawBoard extends Component {
             drawing : false,
             strokeWidth : '0.5',
             path : "",
-            lastPoint : [0, 0],
+            points : [],
             socket: ws
         };
 
@@ -112,22 +115,18 @@ class DrawBoard extends Component {
         else
             nPath = "L"+ coords[0] + "," + coords[1] + " ";
         var nStrokes = this.state.strokes.slice();
-        const updatedPath = cPath + nPath;
+        var prevPoints = this.state.points.slice();
 
-        if(!nStrokes)
-        {
-            nStrokes = [...this.state.strokes, updatedPath];
-        }
-        else
-        {
-            nStrokes[this.state.strokeCount] = updatedPath;
-        }
+        const updatedPath = cPath + nPath;
+        nStrokes = [...this.state.strokes, updatedPath];
+        prevPoints = [...this.state.points, updatedPath];
+
 
         this.setState({
             strokes: nStrokes,
             drawing: drawingStatus,
             path: updatedPath,
-            lastPoint: coords,
+            points: prevPoints
          });
 
         // if(ws.readyState === WebSocket.OPEN)
@@ -139,6 +138,9 @@ class DrawBoard extends Component {
     {
 
         let coords = getCursorPosition(e);
+
+        // if (e.targetTouches.length>1)
+        //     return;
 
         /*
         initialize all control points to coords
