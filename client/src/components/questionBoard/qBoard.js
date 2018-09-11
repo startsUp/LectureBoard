@@ -187,7 +187,7 @@ class QuestionBoard extends Component {
 
             console.log(title);
             console.log(question);
-            broadcastQuestion(fQuestion);
+            //broadcastQuestion(fQuestion);
 
             //call broadcastQuestion here
         }

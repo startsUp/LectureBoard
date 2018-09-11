@@ -57,7 +57,7 @@ class DrawBoard extends Component {
             strokeCount: 0,
             drawing : false,
             strokeWidth : '0.5',
-            path : "",
+            path : 'M',
             points : [],
             socket: ws
         };
@@ -106,26 +106,34 @@ class DrawBoard extends Component {
     finishStroke(){}
 
     updateState(coords, flag){
-        let nPath,
+        let nPath = 'M',
             drawingStatus = true;
         let cPath = this.state.path;
 
-        if(flag==='i')
-            nPath = "M"+ coords[0] + "," + coords[1] + " ";
-        else
-            nPath = "L"+ coords[0] + "," + coords[1] + " ";
         var nStrokes = this.state.strokes.slice();
         var prevPoints = this.state.points.slice();
 
-        const updatedPath = cPath + nPath;
-        nStrokes = [...this.state.strokes, updatedPath];
-        prevPoints = [...this.state.points, updatedPath];
+        prevPoints = [...this.state.points, coords];
+        console.log(cPath);
+        var bezierCurve = fitCurve(prevPoints, 1);
+        if(bezierCurve)
+        {
+            for (var i=0; i<bezierCurve.length; i++)
+            {
+                if(i==0)
+                    nPath = nPath + bezierCurve[i][0] + " " + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+                else
+                    nPath = nPath + " C" + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+            }
+        }
 
+        console.log(nPath);
+        nStrokes[this.state.strokeCount] = nPath;
 
         this.setState({
             strokes: nStrokes,
             drawing: drawingStatus,
-            path: updatedPath,
+            path: nPath,
             points: prevPoints
          });
 
@@ -194,9 +202,12 @@ class DrawBoard extends Component {
         const isDrawing = this.state.drawing;
         if(isDrawing)
         {
+            console.log(this.state.strokes);
             this.setState({
                 drawing: false,
                 strokeCount : this.state.strokeCount+1,
+                path: '',
+                points: []
             });
         }
 
