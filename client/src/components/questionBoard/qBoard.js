@@ -99,7 +99,10 @@ class QuestionCard extends Component{
                     <div id='voteCount'>{this.props.score}</div>
                     <div>{downvote}</div>
                 </div>
-                <div className='question' dangerouslySetInnerHTML={{__html: question}}></div>
+                <div className='question'>
+                    <h3 id='questionTitle'>{this.props.title}</h3>
+                    <div  dangerouslySetInnerHTML={{__html: question}}></div>
+                </div>
                </li>);
     }
 
@@ -112,18 +115,26 @@ class QuestionBoard extends Component {
             hidden : true,
             hover: false,
             submitStatus: false,
-            questions : [{question:'Professor can you write better, i have trouble understanding your handwriting', score:99},
-                         {question:'Can you please shut up?' , score:0}, {question:'So today in Spanish class, my teacher told us that we would be listening to a song in Spanish. Already, I began to tremble. I had a bad feeling about this. Which one? I ask shakily, not wanting to hear the answer. Despacito She responds. I begin to hyperventilate. My worst fears have been realized. I fade in and out of conciseness. I clamp my palms over my ears, but I know it’s futile. The song plays. I’m crying now, praying. God, Allah, Buddha please help me. I curl up on the floor. There’s nothing I can do now. And then it happens. The chorus plays. The girls in my class open their mouths. The screams of the damned, the shrieks of the tortured fill my ears and bounce around my skull. My eardrums rupture, blood leaking out. I try to scream, but no sound comes out. I can only sit there, violently shaking as it happens to me. After what seems like hours, it’s finally over. I try to move, but I cannot make myself. My brain shuts down as my vision fades to black. I muster the last of my energy, uttering the accursed word. Despacito' , score:0},
-                         {question:'My son 👦🏻 can be homer sexual 🏳️‍🌈 My daughter 👧🏻 can be lebanese 👭 But I will NEVER ‼️ Raise a child 👶🏻 who likes Jake and Logan Paul 🙅🏻‍' , score:0}, {question:'Can this show up on the board?' , score:0},
-                         {question:'What\'s <br> Ligma?' , score:0}, {question:'Can this show up on the board?' , score:0},
-                         {question:'Can this show up on the board?' , score:0}, {question:'Can this show up on the board?' , score:0}],
+            questions : [{title: 'Handwriting', question:'Professor can you write better, im having trouble understanding your handwriting', score:99},
+                         {title: 'Shutup', question:'Can you please shut up?' , score:0}, {title: 'Despacito', question:'So today in Spanish class, my teacher told us that we would be listening to a song in Spanish. Already, I began to tremble. I had a bad feeling about this. Which one? I ask shakily, not wanting to hear the answer. Despacito She responds. I begin to hyperventilate. My worst fears have been realized. I fade in and out of conciseness. I clamp my palms over my ears, but I know it’s futile. The song plays. I’m crying now, praying. God, Allah, Buddha please help me. I curl up on the floor. There’s nothing I can do now. And then it happens. The chorus plays. The girls in my class open their mouths. The screams of the damned, the shrieks of the tortured fill my ears and bounce around my skull. My eardrums rupture, blood leaking out. I try to scream, but no sound comes out. I can only sit there, violently shaking as it happens to me. After what seems like hours, it’s finally over. I try to move, but I cannot make myself. My brain shuts down as my vision fades to black. I muster the last of my energy, uttering the accursed word. Despacito' , score:0},
+                         {title: 'Overused', question:'What <br>?' , score:0}],
         }
         this.show = this.show.bind(this);
         this.changeColor = this.changeColor.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateScore = this.updateScore.bind(this);
+        this.addQuestion = this.addQuestion.bind(this);
         this.toggleQuestions = this.toggleQuestions.bind(this);
+
     }
+    addQuestion(title, question)
+    {
+
+        this.setState({questions: [...this.state.questions, {title: title, question: question, score: 0}], newQ: this.state.newQ+1});
+        if(this.props.webSocket.readyState === WebSocket.OPEN)
+            this.props.webSocket.send(question);
+    }
+
     show()
     {
         this.setState({hidden: !this.state.hidden});
@@ -139,13 +150,6 @@ class QuestionBoard extends Component {
 
         questions[index] = updatedQuestion;
         this.setState({questions: questions});
-    }
-
-    broadcastQuestion(question){
-
-        this.setState({questions: [...this.state.questions, {question: question, score: 0}], newQ: this.state.newQ+1});
-        if(this.props.webSocket.readyState === WebSocket.OPEN)
-            this.props.webSocket.send(question);
     }
 
     changeColor()
@@ -182,18 +186,15 @@ class QuestionBoard extends Component {
         {
             var title = document.getElementById('title-textbox').value.replace(/(?:\r\n|\r|\n)/g, '<br>');
             var question = document.getElementById('qt-textbox').value.replace(/(?:\r\n|\r|\n)/g, '<br>');
-
-            var fQuestion = title + '<br>' + question;
-
-            console.log(title);
-            console.log(question);
-            //broadcastQuestion(fQuestion);
+            this.addQuestion(title, question)
 
             //call broadcastQuestion here
         }
 
         this.setState({submitStatus: !this.state.submitStatus});
     }
+
+
 
     scrollInputIntoView(){
         // const element = document.getElementById('textbox');
@@ -203,7 +204,7 @@ class QuestionBoard extends Component {
 
         const qB = this.state.questions.map((questionObject, index) => {
             const id = 'question' + index;
-            return(<QuestionCard key={index} question={questionObject.question} index={index} id={id} score={questionObject.score} onVote={this.updateScore}/>);
+            return(<QuestionCard key={index} title={questionObject.title} question={questionObject.question} index={index} id={id} score={questionObject.score} onVote={this.updateScore}/>);
         });
         const back = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 492 492" className='svgIcon' id='back-svg'>
                         <path d="M464.344 207.418l.768.168H135.888l103.496-103.724c5.068-5.064 7.848-11.924 7.848-19.124 0-7.2-2.78-14.012-7.848-19.088L223.28 49.538c-5.064-5.064-11.812-7.864-19.008-7.864-7.2 0-13.952 2.78-19.016 7.844L7.844 226.914C2.76 231.998-.02 238.77 0 245.974c-.02 7.244 2.76 14.02 7.844 19.096l177.412 177.412c5.064 5.06 11.812 7.844 19.016 7.844 7.196 0 13.944-2.788 19.008-7.844l16.104-16.112c5.068-5.056 7.848-11.808 7.848-19.008 0-7.196-2.78-13.592-7.848-18.652L134.72 284.406h329.992c14.828 0 27.288-12.78 27.288-27.6v-22.788c0-14.82-12.828-26.6-27.656-26.6z"/>

@@ -51,7 +51,7 @@ Semilight to an appropriate font-weight.
 .container{
     width: 100vw;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
 

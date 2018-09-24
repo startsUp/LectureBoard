@@ -43,7 +43,7 @@ class Path extends Component {
 
         return(
 
-            <path d={this.props.desc} className='path' zoomAndPan='magnify'/>
+            <path d={this.props.desc} strokeWidth={this.props.strokeWidth} fill={this.props.fill} stroke={this.props.stroke} className='path' zoomAndPan='magnify'/>
         );
     }
 }
@@ -56,7 +56,7 @@ class DrawBoard extends Component {
             strokes : [],
             strokeCount: 0,
             drawing : false,
-            strokeWidth : '0.5',
+            strokeWidth : '3',
             path : 'M',
             points : [],
             socket: ws
@@ -106,42 +106,141 @@ class DrawBoard extends Component {
     finishStroke(){}
 
     updateState(coords, flag){
-        let nPath = 'M',
-            drawingStatus = true;
-        let cPath = this.state.path;
+        // let nPath = 'M',
+        //     drawingStatus = true;
+        // let cPath = this.state.path;
+        //
+        // var nStrokes = this.state.strokes.slice();
+        // var prevPoints = this.state.points.slice();
+        //
+        // prevPoints = [...this.state.points, coords];
+        // console.log(cPath);
+        // var bezierCurve = fitCurve(prevPoints, 1);
+        // if(bezierCurve)
+        // {
+        //     for (var i=0; i<bezierCurve.length; i++)
+        //     {
+        //         if(i==0)
+        //             nPath = nPath + bezierCurve[i][0] + " " + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+        //         else
+        //             nPath = nPath + " C" + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+        //     }
+        // }
+        //
+        // console.log(nPath);
+        // nStrokes[this.state.strokeCount] = nPath;
+        //
+        // this.setState({
+        //     strokes: nStrokes,
+        //     drawing: drawingStatus,
+        //     path: nPath,
+        //     points: prevPoints
+        //  });
+         let nPath,
+             drawingStatus = true;
+         let cPath = this.state.path;
 
-        var nStrokes = this.state.strokes.slice();
-        var prevPoints = this.state.points.slice();
+         if(flag==='i')
+             nPath = "M"+ coords[0] + "," + coords[1] + " ";
+         else
+             nPath = "L"+ coords[0] + "," + coords[1] + " ";
+         var nStrokes = this.state.strokes.slice();
+         var prevPoints = this.state.points.slice();
 
-        prevPoints = [...this.state.points, coords];
-        console.log(cPath);
-        var bezierCurve = fitCurve(prevPoints, 1);
-        if(bezierCurve)
-        {
-            for (var i=0; i<bezierCurve.length; i++)
-            {
-                if(i==0)
-                    nPath = nPath + bezierCurve[i][0] + " " + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
-                else
-                    nPath = nPath + " C" + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
-            }
-        }
+         const updatedPath = cPath + nPath;
+         console.log(updatedPath)
+         if(nStrokes)
+            nStrokes[this.state.strokeCount] =  updatedPath;
+        else
+            nStrokes.append(updatedPath);
+         prevPoints = [...this.state.points, coords];
 
-        console.log(nPath);
-        nStrokes[this.state.strokeCount] = nPath;
 
-        this.setState({
-            strokes: nStrokes,
-            drawing: drawingStatus,
-            path: nPath,
-            points: prevPoints
-         });
+         this.setState({
+             strokes: nStrokes,
+             drawing: drawingStatus,
+             path: updatedPath,
+             points: prevPoints
+          });
 
         // if(ws.readyState === WebSocket.OPEN)
         //     ws.send(nPath);
     }
 
+    // updateState(coords, flag){
+    //
+    //     // if(ws.readyState === WebSocket.OPEN)
+    //     //     ws.send(nPath);
+    // }
 
+
+    // startDraw(e)
+    // {
+    //
+    //     let coords = getCursorPosition(e);
+    //
+    //     // if (e.targetTouches.length>1)
+    //     //     return;
+    //
+    //     /*
+    //     initialize all control points to coords
+    //     var c0 = coords;
+    //     var c1 = coords;
+    //     var c2 = coords;
+    //     var c3 = coords;
+    //
+    //     clear the 2d vector distance field
+    //     clearDistanceField();
+    //
+    //
+    //     */
+    //
+    //
+    //     this.updateState(coords, 'i');
+    // }
+
+    // corner(prevCoords, newCoords)
+    // {
+    //
+    // }
+    //
+    // draw(e)
+    // {
+    //
+    //
+    //
+    //
+    //     const isDrawing = this.state.drawing;
+    //     if(isDrawing)
+    //     {
+    //         let coords = getCursorPosition(e);
+    //
+    //         /*
+    //         test if the point is corner
+    //         var lastPoint = prevCoords;
+    //         if(corner(lastPoint, coords))
+    //             clear vector field
+    //
+    //
+    //         */
+    //         this.updateState(coords, 'd');
+    //     }
+    //
+    //
+    // }
+    //
+    // finishDraw(e){
+    //
+    //     const isDrawing = this.state.drawing;
+    //     if(isDrawing)
+    //     {
+    //         this.setState({
+    //             drawing: false,
+    //             strokeCount : this.state.strokeCount+1,
+    //         });
+    //     }
+    //
+    // }
     startDraw(e)
     {
 
@@ -198,13 +297,30 @@ class DrawBoard extends Component {
     }
 
     finishDraw(e){
-
+        console.log(this.state.strokes)
         const isDrawing = this.state.drawing;
         if(isDrawing)
         {
-            console.log(this.state.strokes);
+
+            var prevPoints = this.state.points.slice();
+
+            var bezierCurve = fitCurve(prevPoints, 1);
+            var nPath = 'M';
+            if(bezierCurve)
+            {
+                for (var i=0; i<bezierCurve.length; i++)
+                {
+                    if(i==0)
+                        nPath = nPath + bezierCurve[i][0] + " " + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+                    else
+                        nPath = nPath + " C" + bezierCurve[i][1] + " " + bezierCurve[i][2] + " " + bezierCurve[i][3];
+                }
+            }
+            var nStrokes = this.state.strokes.slice();
+            nStrokes[this.state.strokeCount] =  nPath;
             this.setState({
                 drawing: false,
+                strokes: nStrokes,
                 strokeCount : this.state.strokeCount+1,
                 path: '',
                 points: []
@@ -219,7 +335,7 @@ class DrawBoard extends Component {
         const strokes = this.state.strokes.map((stroke, index) => {
 
             return(
-                <Path key={index} strokeWidth={this.state.strokeWidth} desc={stroke} count={this.state.strokeCount} id={index}/>
+                <Path key={index} strokeWidth={this.state.strokeWidth} stroke="black" fill="none" desc={stroke} count={this.state.strokeCount} id={index}/>
             );
         });
         //console.log(strokes);

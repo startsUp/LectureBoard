@@ -4,6 +4,7 @@ import './App.css';
 import NavBar from './components/navbar/navbar';
 import DrawBoard from './components/svgDrawBoard/drawBoard';
 import QuestionBoard from './components/questionBoard/qBoard';
+import './normalize.css';
 
 var ws;
 
