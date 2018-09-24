@@ -1,2 +1,2 @@
 # LectureBoard
-An app that offers seamless uninterrupting classroom experience for professor and students.
+An app that offers uninterrupted classroom experience for professor and students
