@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wahengchang/nodejs-websocket-example.git"
+    "url": "git+https://github.com/startsUp/LectureBoard"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wahengchang/nodejs-websocket-example/issues"
+    "url": "https://github.com/startsUp/LectureBoard/issues"
   },
-  "homepage": "https://github.com/wahengchang/nodejs-websocket-example#readme",
+  "homepage": "https://github.com/startsUp/LectureBoard#readme",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",
