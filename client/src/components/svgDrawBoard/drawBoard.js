@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './drawBoard.css';
+import fitCurve from 'fit-curve'
+
 
 var ws;
-var fitCurve = require('fit-curve');
-
-
 
 //// TODO: Fitting Bezier Curve to store less info and smoothen curve
 //// Curve Equation : x(u) =  Sum (c (1-u)^3 - ux)
